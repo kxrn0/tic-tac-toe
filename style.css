@@ -1,0 +1,44 @@
+* *::before, *::after {
+    margin : 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family : 'Comforter Brush';
+    src : url('ComforterBrush-Regular.ttf');
+}
+
+body {
+    background-color: antiquewhite;
+}
+
+.boxed {
+    border-radius : 5px;
+    box-shadow : 0 5px 10px rgb(87, 91, 107);
+}
+
+.init-container {
+    width : 500px;
+    background-color: burlywood;
+    margin : 150px auto;
+    padding : 20px;
+}
+
+.initial-choices {
+    display : flex;
+    background-color: cadetblue;
+    justify-content: space-around;
+    padding : 20px;
+}
+
+.init-choice {
+    background-color: coral;
+    width : 150px;
+    color : azure;
+    font-size : 30px;
+    text-align: center;
+    font-family : 'Comforter Brush';
+    /* font : 30px 'Comforter Brush'; */
+    /* font : 40px monospace; */
+}
