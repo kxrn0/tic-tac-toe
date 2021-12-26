@@ -1,11 +1,12 @@
 //-------------------------------start------------------------------------------
 
 const choices = document.querySelectorAll(".init-choice");
-let aiButton, aiLevels;
+let startButton;
 for (let i = 0; i < choices.length; i++)
     choices[i].addEventListener("click", () => {
         let j;
         let firstStage, secondStage;
+        let aiButton, aiLevels;
         let newNormal;
 
         j = (i + 1) % choices.length;
@@ -17,9 +18,18 @@ for (let i = 0; i < choices.length; i++)
 
         firstStage = newNormal.querySelector(".first-stage");
         secondStage = newNormal.querySelector(".second-stage");
+        startButton = secondStage.querySelector(".start-button");
 
         firstStage.classList.add("hidden");
         secondStage.classList.remove("hidden");
+
+        startButton.addEventListener("click", () => {
+            const initCnt = document.querySelector(".init-container");
+            const gameUI = document.querySelector(".game-ui");
+
+            initCnt.classList.add("hidden");
+            gameUI.classList.remove("hidden");
+        });
 
         if (newNormal.querySelector(".ai-menu")) {
             aiButton = document.querySelector(".ai-button");
@@ -53,3 +63,14 @@ for (let i = 0; i < choices.length; i++)
     });
 
 //-------------------------------end------------------------------------------
+
+const board = document.querySelector(".board");
+
+for (let i = 0; i < 9; i++) {
+    let pad;
+    
+    pad = document.createElement("div");
+    pad.classList.add("pad");
+    pad.classList.add("boxed");
+    board.appendChild(pad);
+}
