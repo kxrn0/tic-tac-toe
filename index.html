@@ -12,22 +12,58 @@
 
 <body>
     <main class="main">
+        <!-- 
+            There will be a box in the start screen, the box will contain the first selection buttons and the 
+            naming screen buttons.
+            The first buttons that will be presented to the user are going to be 'pvp' and 'pvai', after the user clicks on 
+            one of those, whichever the user clicked will lead to the start screen. After the user clicks, the first
+            stage will be hidden, and the second stage will be shown.
+         -->
         <section class="init-container boxed">
-            <section class="initial-choices boxed">
-                <div id="pvp" class="init-choice boxed">
-                    <p>Player1</p>
-                    <p>VS</p>
-                    <p>Player2</p>
+            <div class="init-choices boxed">
+                <div id="pvp" class="init-choice boxed active">
+                    <div class="first-stage active-alert">
+                        <p>Player1</p>
+                        <p>VS</p>
+                        <p>Player2</p>
+                    </div>
+                    <div class="second-stage hidden">
+                        <input type="text" value="Player1" spellcheck="false">
+                        <p>VS</p>
+                        <input type="text" value="Player2" spellcheck="false">
+                        <button class="start-button">START</button>
+                    </div>
                 </div>
-                <div id="pvai" class="init-choice boxed">
-                    <p>Player</p>
-                    <p>VS</p>
-                    <p>AI</p>
+                <div id="pvai" class="init-choice boxed active">
+                    <div class="first-stage">
+                        <p>Player</p>
+                        <p>VS</p>
+                        <p>AI</p>
+                    </div>
+                    <div class="second-stage hidden">
+                        <input type="text" value="Player1" spellcheck="false">
+                        <p>VS</p>
+                        <div class="ai-menu">
+                            <button class="ai-button">AIの力☞</button>
+                            <div class="ai-levels boxed inactive">
+                                <div>
+                                    <input type="radio" id="ai-easy" value="Easy" name="ai-level" class="ai-level">
+                                    <label for="ai-easy">Easy</label>
+                                </div>
+                                <div>
+                                    <input type="radio" id="ai-medium" value="Medium" name="ai-level" class="ai-level">
+                                    <label for="ai-medium">Medium</label>
+                                </div>
+                                <div>
+                                    <input type="radio" id="ai-hard" value="Hard" name="ai-level" class="ai-level">
+                                    <label for="ai-hard">Hard</label>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="start-button">START</button>
+                    </div>
                 </div>
-            </section>
-            <!-- <section class="start-container">
-
-            </section> -->
+            </div>
         </section>
     </main>
 </body>

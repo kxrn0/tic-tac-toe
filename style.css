@@ -13,9 +13,14 @@ body {
     background-color: antiquewhite;
 }
 
+input[type="radio"] {
+    width : auto !important;
+}
+
 .boxed {
     border-radius : 5px;
-    box-shadow : 0 5px 10px rgb(87, 91, 107);
+    box-shadow : 0 5px 10px rgb(81, 86, 104);
+
 }
 
 .init-container {
@@ -25,7 +30,7 @@ body {
     padding : 20px;
 }
 
-.initial-choices {
+.init-choices {
     display : flex;
     background-color: cadetblue;
     justify-content: space-around;
@@ -34,11 +39,111 @@ body {
 
 .init-choice {
     background-color: coral;
-    width : 150px;
+    width : 175px;
     color : azure;
     font-size : 30px;
     text-align: center;
     font-family : 'Comforter Brush';
-    /* font : 30px 'Comforter Brush'; */
-    /* font : 40px monospace; */
+    user-select: none;
+    transition : .1s;
+}
+
+.active:hover {
+    background-color: rgb(228, 125, 87);
+    transform : scale(1.01);
+    box-shadow : 0 10px 15px rgb(34, 34, 59);
+}
+
+.active:active {
+    background-color: rgb(211, 105, 79);
+    transform : scale(.99);
+}
+
+.second-stage {
+    display : flex;
+    flex-direction : column;
+    align-items: center;
+    padding : 10px;
+}
+
+.second-stage input {
+    padding : 5px;
+    width : 130px;
+    font-size : 30px;
+    font-family : 'Comforter Brush';
+    text-align : center;
+    background : rgb(199, 182, 182);
+}
+
+.start-button {
+    margin : 10px;
+    padding : 5px;
+    background-color :rgb(235, 217, 214);
+    color : rgb(15, 32, 63);
+    border-radius : 5px;
+    border : none;
+    font-family : 'Comforter Brush';
+    font-size : 20px;
+    text-align: center;
+}
+
+.start-button:hover {
+    background-color :rgb(219, 204, 195);
+}
+
+.start-button:active {
+    background-color :rgb(207, 180, 180);
+    transform : scale(.99);
+}
+
+.ai-button {
+    font-size : 25px;
+    padding : 5px;
+    font-family : 'Comforter Brush';
+}
+
+.ai-button {
+    background-color: rgb(238, 187, 145);
+}
+
+.ai-button:hover {
+    background-color: rgb(223, 167, 130);
+}
+.ai-button:active {
+    background-color: rgb(189, 130, 106);
+    transform : scale(.99);
+}
+
+.ai-menu {
+    position : relative;
+}
+
+.ai-levels {
+    position : absolute;
+    left : 0;
+    padding : 0 0 0 30px ;
+    font-size : 30px;
+    display : flex;
+    flex-direction : column;
+    align-items: flex-start;
+    background-color: rgba(132, 157, 190, .8);
+    width : 125px;
+    transition : opacity 150ms ease-in-out, transform 150ms ease-in-out;
+}
+
+.inactive {
+    opacity : 0;
+    pointer-events : none;
+    transform : translate(-10px);
+}
+
+.active {
+    opacity : 1;
+    pointer-events : auto;
+    transform : translate(0);
+}
+
+.hidden {
+    display : none;
+    pointer-events: none;
 }
