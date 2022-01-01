@@ -1,7 +1,7 @@
 const gameBoard = (
     function () {
         let turn, count, players, boardState;
-        let create_board, check_board, check_for_winner, init, select_random_cell, add_listeners, available_spots;
+        let create_board, check_board, check_for_winner, init, select_random_cell, add_listeners, available_spots, minimax;
         const feedbackButtons = document.querySelectorAll(".player");
         const playAgainButton = document.querySelector(".play-again-button");
         const board = document.querySelector(".board");
@@ -25,7 +25,7 @@ const gameBoard = (
             let spots = [];
 
             for (let i = 0; i < 9; i++)
-                if (!players[0].includes(i) && !players[1].includes(i))
+                if (!players[0].state.includes(i) && !players[1].state.includes(i))
                     spots.push(i);
             return spots;
         } 
@@ -55,6 +55,8 @@ const gameBoard = (
                             disableScreen.classList.remove("hidden");
                             setTimeout(() => {
                                 let machineMove, index;
+
+                                let boardState;
 
                                 index = select_random_cell(players[0].state, players[1].state);
                                 machineMove = document.querySelector(`[data-value='${index}']`);
