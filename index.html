@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="ScreenOrientation" content="autoRotate:disabled">
+
     <title>Initial Screen</title>
     <link rel="stylesheet" href="style.css">
     <script src="main.js" defer></script>
@@ -12,13 +14,6 @@
 
 <body>
     <main class="main">
-        <!-- 
-            There will be a box in the start screen, the box will contain the first selection buttons and the 
-            naming screen buttons.
-            The first buttons that will be presented to the user are going to be 'pvp' and 'pvai', after the user clicks on 
-            one of those, whichever the user clicked will lead to the start screen. After the user clicks, the first
-            stage will be hidden, and the second stage will be shown.
-         -->
         <section class="init-container boxed">
             <div class="init-choices boxed">
                 <div id="pvp" class="init-choice boxed active">
@@ -28,9 +23,9 @@
                         <p>Player2</p>
                     </div>
                     <div class="second-stage hidden">
-                        <input type="text" value="Player1" spellcheck="false">
+                        <input type="text" value="Player1" spellcheck="false" class="player-name">
                         <p>VS</p>
-                        <input type="text" value="Player2" spellcheck="false">
+                        <input type="text" value="Player2" spellcheck="false" class="player-name">
                         <button class="start-button">START</button>
                     </div>
                 </div>
@@ -41,10 +36,13 @@
                         <p>AI</p>
                     </div>
                     <div class="second-stage hidden">
-                        <input type="text" value="Player1" spellcheck="false">
+                        <input type="text" value="Player1" spellcheck="false" class="player-name">
                         <p>VS</p>
                         <div class="ai-menu">
                             <button class="ai-button">AIの力☞</button>
+                            <div class="warning-wrapper hidden">
+                                <p class="warning-message">Required</p>
+                            </div>
                             <div class="ai-levels boxed inactive">
                                 <div>
                                     <input type="radio" id="ai-easy" value="Easy" name="ai-level" class="ai-level">
@@ -68,12 +66,23 @@
 
         <section class="game-ui hidden">
             <div class="lights">
-                <div class="player1 player lights-on">It's Player1's Turn</div>
-                <div class="player2 player lights-off">It's 愛's turn</div>
+                <div class="player lights-on">It's 2's Turn</div>
+                <div class="player lights-off">It's a愛i's turn</div>
             </div>
             <div class="board boxed">
             </div>
         </section>
+
+        <section class="game-over-screen hidden">
+            <div class="wrapper boxed">
+                <div class="modal boxed">
+                    <p>Game Over!</p>
+                    <p><span class="winner-name"></span> is the Victor!</p>
+                    <button class="play-again-button">Play Again</button>
+                </div>
+            </div>
+        </section>
+        <section class="disable-screen hidden"></section>
     </main>
 </body>
 
