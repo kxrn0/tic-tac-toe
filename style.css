@@ -1,4 +1,4 @@
-* *::before, *::after {
+*, *::before, *::after {
     margin : 0;
     padding: 0;
     box-sizing: border-box;
@@ -13,11 +13,6 @@
     font-family: 'Caveat Brush';
     src : url('CaveatBrush-Regular.ttf');
 }
-
-/* @font-face {
-    font-family : 'Kolker Brush';
-    src : url('KolkerBrush-Regular.ttf');
-} */
 
 body {
     background-color: antiquewhite;
