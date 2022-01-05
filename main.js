@@ -1,14 +1,12 @@
 const gameBoard = (
     function () {
-        let turn, count, players, boardState;
-        let create_board, check_board, check_for_winner, init, select_random_cell, add_listeners, available_spots, minimax;
+        let turn, count, players;
+        let create_board, check_board, check_for_winner, init, select_random_cell, add_listeners, available_spots, minimax, get_board_state;
         const feedbackButtons = document.querySelectorAll(".player");
         const playAgainButton = document.querySelector(".play-again-button");
         const board = document.querySelector(".board");
         const finalScreen = document.querySelector(".game-over-screen");
         const disableScreen = document.querySelector(".disable-screen");
-
-        boardState = [];
 
         select_random_cell = (player1, player2) => {
             let value, count;
@@ -21,14 +19,81 @@ const gameBoard = (
             return value;
         }
 
-        available_spots = () => {
-            let spots = [];
+        available_spots = board => board.filter(cell => typeof cell == "number");
+
+        get_board_state = () => {
+            let board = [];
 
             for (let i = 0; i < 9; i++)
-                if (!players[0].state.includes(i) && !players[1].state.includes(i))
-                    spots.push(i);
-            return spots;
-        } 
+                if (players[0].state.includes(i))
+                    board.push(players[0].symbol);
+                else if (players[1].state.includes(i))
+                    board.push(players[1].symbol);
+                else
+                    board.push(i);
+            return board;
+        }
+
+        //minimax algorithm referenced from here : https://www.youtube.com/watch?v=P2TcQ3h0ipQ&t=1s
+        minimax = (board, player) => {
+            let availableSpots, humanState, robotState, moves, bestMove;
+
+            availableSpots = available_spots(board);
+            humanState = [];
+            robotState = [];
+            for (let i = 0; i < board.length; i++)
+                if (board[i] == '×')
+                    humanState.push(i);
+                else if (board[i] == 'o')
+                    robotState.push(i);
+
+            if (check_for_winner(humanState))
+                return { score: -10 };
+            else if (check_for_winner(robotState))
+                return { score: 10 };
+            else if (!availableSpots.length)
+                return { score: 0 };
+
+            moves = [];
+            for (let i = 0; i < availableSpots.length; i++) {
+                let move = {};
+
+                move.index = board[availableSpots[i]];
+                board[availableSpots[i]] = player;
+
+                if (player == players[1].symbol) {
+                    let result = minimax(board, players[0].symbol);
+                    move.score = result.score;
+                }
+                else {
+                    let result = minimax(board, players[1].symbol);
+                    move.score = result.score;
+                }
+
+                board[availableSpots[i]] = move.index;
+                moves.push(move);
+            }
+
+            if (player == players[1].symbol) {
+                let bestScore = -Infinity;
+
+                for (let i = 0; i < moves.length; i++)
+                    if (moves[i].score > bestScore) {
+                        bestScore = moves[i].score;
+                        bestMove = i;
+                    }
+            }
+            else {
+                let bestScore = Infinity;
+
+                for (let i = 0; i < moves.length; i++)
+                    if (moves[i].score < bestScore) {
+                        bestScore = moves[i].score;
+                        bestMove = i;
+                    }
+            }
+            return moves[bestMove];
+        }
 
         add_listeners = () => {
             const pads = document.querySelectorAll(".pad");
@@ -50,18 +115,33 @@ const gameBoard = (
                         count--;
 
                         if (turn && players[1].smart) {
-                            let timeInTheMarket = Math.floor(Math.random() * 500) + 500;
+                            let timeInTheMarket;
+
+                            timeInTheMarket = Math.floor(Math.random() * 500) + 500;
 
                             disableScreen.classList.remove("hidden");
                             setTimeout(() => {
-                                let machineMove, index;
+                                let machineMove, index, boardState;
 
-                                let boardState;
+                                boardState = get_board_state();
 
-                                index = select_random_cell(players[0].state, players[1].state);
+                                if (players[1].level == "Easy")
+                                    index = select_random_cell(players[0].state, players[1].state);
+                                else if (players[1].level == "Medium") {
+                                    let rand;
+
+                                    rand = Math.random();
+                                    if (rand < .25)
+                                        index = select_random_cell(players[0].state, players[1].state);
+                                    else
+                                        index = minimax(boardState, players[1].symbol).index;
+                                }
+                                else if (players[1].level == "Hard")
+                                    index = minimax(boardState, players[1].symbol).index;
+
                                 machineMove = document.querySelector(`[data-value='${index}']`);
-                                machineMove.click();
-
+                                if (machineMove)
+                                    machineMove.click();
                                 disableScreen.classList.add("hidden");
                             }, timeInTheMarket);
                         }
@@ -188,7 +268,7 @@ const gameBoard = (
                     document.querySelector(".winner-name").innerText = player.name;
                     break;
                 }
-            
+
             if (!gover && !count) {
                 finalScreen.classList.remove("hidden");
                 document.querySelector(".winner-name").innerText = "nobody";
@@ -201,7 +281,7 @@ const gameBoard = (
 
 const game = (
     function () {
-        let start_screen, restart;
+        let start_screen;
         let players;
 
         function activate_windows(aiLevels, aiButton) {
@@ -320,12 +400,7 @@ const game = (
                     players = [{ name: "Player1", smart: false, symbol: '×', state: [] }, { name: "Player2", smart: false, symbol: 'o', state: [] }];
                 });
         }
-
-        restart = () => {
-
-        }
-
-        return { start_screen, restart };
+        return { start_screen };
     })();
 
 game.start_screen();
